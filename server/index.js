@@ -20,7 +20,9 @@ app.use(express.json())
 
 //Routes
 import ideaRoutes from './routes/idea.routes'
+import studentRoutes from './routes/student.routes'
 app.use("/api/ideas",ideaRoutes)
+app.use("/api/student",studentRoutes)
 
 
 

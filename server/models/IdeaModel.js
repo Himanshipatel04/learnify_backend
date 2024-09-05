@@ -17,8 +17,7 @@ const IdeaSchema = mongoose.Schema(
       required:true
     },
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "UserModel",
+        type: String,
         required: true,
       },
   },
