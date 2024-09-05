@@ -18,6 +18,12 @@ app.use(express.json())
 
 
 
+//Routes
+import ideaRoutes from './routes/idea.routes'
+app.use("/api/ideas",ideaRoutes)
+
+
+
 
 //server
 app.listen(`${process.env.PORT}`,()=>{
