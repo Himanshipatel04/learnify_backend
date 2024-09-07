@@ -1,4 +1,5 @@
-import express from 'express'
+import express, { urlencoded } from "express";
+import cookieParser from "cookie-parser";
 require('dotenv').config();
 import cors from "cors"
 import dbConnection from './db/dbConnection'
@@ -9,12 +10,16 @@ const app = express()
 app.get('/',(req,res)=>{
     res.send("Hello")
 })
-
+ 
 
 
 //Middlewares
-app.use(cors())
+app.use(cors()) 
 app.use(express.json())
+app.use(cookieParser())
+app.options('*', cors());
+app.use(urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 
 
