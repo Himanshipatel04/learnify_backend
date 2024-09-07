@@ -70,8 +70,10 @@ export const loginUser = async (req, res) => {
 
     const options = {
       httpOnly: true,
-      secure: true,
     };
+
+    // console.log(accessToken);
+    // console.log(refreshToken);
 
     return res
       .status(200)
@@ -84,15 +86,14 @@ export const loginUser = async (req, res) => {
       );
   } catch (error) {
     console.error("Login error:", error);
-    return res.status(500).json(new ApiError(500, "Internal Server Error"));
+    res.status(500).json(new ApiError(500, "Internal Server Error"));
   }
 };
 
 export const getStudentUser = async (req, res) => {
-  
   try {
     const user = req.user;
-    console.log(user);
+    
 
     if (!user) {
       return res.status(404).json(new ApiError(404, "User not found!"));

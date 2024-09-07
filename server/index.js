@@ -14,14 +14,13 @@ app.get('/',(req,res)=>{
 
 //Middlewares
 app.use(cors({
-    credentials:true
-})) 
-app.use(express.json())
-app.use(cookieParser())
-app.options('*', cors());
-app.use(urlencoded({ extended: true }));
-app.use(express.static("public"));
-
+    origin: 'http://localhost:5173', 
+    credentials: true 
+  }));
+  app.use(cookieParser());
+  app.use(express.json());
+  app.use(urlencoded({ extended: true }));
+  app.use(express.static("public"));
 
 
 //Routes

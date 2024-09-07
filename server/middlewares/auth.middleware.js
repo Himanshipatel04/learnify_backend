@@ -8,20 +8,21 @@ export const verifyJWT = async (req, res, next) => {
       req.cookies?.accessToken ||
       req.body?.accessToken ||
       req.header("Authorization")?.replace("Bearer ", "");
-    console.log(token,"......................");
+    console.log(token,".......");
     
     console.log("hello guys");
+    
     if (!token) {
       console.log("Token not found");
       return res
         .status(401)
         .json(new ApiError(401, "Unauthorized access to website!"));
     }
-    // console.log(token);
+  
 
     const decodeToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
-    // console.log(decodeToken);
+    
 
     const user = await StudentModel.findOne({
       email: decodeToken.email,
