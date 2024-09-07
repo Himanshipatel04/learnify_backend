@@ -47,40 +47,62 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await StudentModel.findOne({ email });
+  try {
+    const user = await StudentModel.findOne({ email });
 
-  if (!user) {
-    res.status(404).json(new ApiError(404, "User not found!"));
+    if (!user) {
+      res.status(404).json(new ApiError(404, "User not found!"));
+    }
+
+    const isPasswordCorrect = await user.isPasswordCorrect(password);
+
+    if (!isPasswordCorrect) {
+      res.status(400).json(new ApiError(400, "Incorrect Password!"));
+    }
+
+    const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
+      user._id
+    );
+
+    const loggedInUser = await StudentModel.findById(user._id).select(
+      "-refreshToken -password"
+    );
+
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", refreshToken, options)
+      .json(
+        new ApiResponse(200, "Student Logged in successfully!", {
+          user: { accessToken, loggedInUser },
+        })
+      );
+  } catch (error) {
+    console.error("Login error:", error);
+    return res.status(500).json(new ApiError(500, "Internal Server Error"));
   }
-
-  const isPasswordCorrect = await user.isPasswordCorrect(password);
-
-  if (!isPasswordCorrect) {
-    res.status(400).json(new ApiError(400, "Incorrect Password!"));
-  }
-
-  const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
-    user._id
-  );
-
-  const loggedInUser = await StudentModel.findById(user._id).select(
-    "-refreshToken -password"
-  );
-
-  const options = {
-    httpOnly: true,
-    secure: true,
-  };
-
-  res.
-  status(200)
-  .cookie("accessToken",accessToken,options)
-  .cookie("refreshToken",refreshToken,options)
-  .json(
-    new ApiResponse(200, "Student Logged in successfully!", {
-      user: { accessToken, loggedInUser },
-    })
-  );
 };
 
+export const getStudentUser = async (req, res) => {
+  
+  try {
+    const user = req.user;
+    console.log(user);
 
+    if (!user) {
+      return res.status(404).json(new ApiError(404, "User not found!"));
+    }
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "User fetched successfully!", user));
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return res.status(500).json(new ApiError(500, "Internal Server Error"));
+  }
+};
