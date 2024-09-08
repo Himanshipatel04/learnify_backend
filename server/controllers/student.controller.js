@@ -29,7 +29,7 @@ export const registerUser = async (req, res) => {
 
   if (userExists) {
     throw new ApiError(409, "User already exits!");
-  }
+  } 
 
   const hashedPassword = await bcrypt.hash(password, 10);
 

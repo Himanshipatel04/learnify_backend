@@ -32,7 +32,7 @@ studentSchema.methods.isPasswordCorrect = function(password){
 studentSchema.methods.generateAccessToken =  function(){
     return jwt.sign({
         _id : this._id,
-        username : this.username,
+        name : this.name,
         email : this.email
     },process.env.ACCESS_TOKEN_SECRET,{expiresIn:process.env.ACCESS_TOKEN_EXPIRY})}
 

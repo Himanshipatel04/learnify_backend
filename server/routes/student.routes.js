@@ -6,7 +6,7 @@ const router = Router()
 
 router.route("/register-student").post(registerUser) 
 
-router.route("/login-student").post(loginUser)
+router.route("/login").post(loginUser)
 
 router.route("/getStudentUser").post(verifyJWT,getStudentUser)
 
