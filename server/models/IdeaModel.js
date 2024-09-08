@@ -16,7 +16,7 @@ const IdeaSchema = mongoose.Schema(
       type: String,
       required:true
     },
-    user: {
+    email: {
         type: String,
         required: true,
       },

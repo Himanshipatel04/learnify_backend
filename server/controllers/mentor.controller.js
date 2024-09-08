@@ -130,3 +130,8 @@ export const logout = async (req, res) => {
     console.log("Error while logging out for mentor",error);
   }
 };
+
+export const getMentors = async(req,res) => {
+     const mentors = await MentorModel.find()
+     res.status(200).json(new ApiResponse(200,"Mentors fetched!",mentors))
+}
