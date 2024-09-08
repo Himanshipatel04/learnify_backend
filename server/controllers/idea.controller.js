@@ -22,3 +22,14 @@ export const createIdea = async (req, res) => {
     return res.status(500).json(new ApiError(500, "Can't Create Idea!", error));
   }
 };
+
+export const fetchIdea = async(req,res) => {
+  try{
+    const ideas = await IdeaModel.find()
+    // console.log(ideas); 
+    return res.status(200).json(new ApiResponse(200,"Ideas fetched successfully!",ideas))
+  }
+  catch(error){
+    return res.status(500).json(new ApiError(500,"Can't fetch Idea!"))
+  }
+}
