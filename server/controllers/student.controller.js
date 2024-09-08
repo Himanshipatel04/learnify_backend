@@ -93,7 +93,6 @@ export const loginUser = async (req, res) => {
 export const getStudentUser = async (req, res) => {
   try {
     const user = req.user;
-    
 
     if (!user) {
       return res.status(404).json(new ApiError(404, "User not found!"));
@@ -105,5 +104,25 @@ export const getStudentUser = async (req, res) => {
   } catch (error) {
     console.error("Error fetching user:", error);
     return res.status(500).json(new ApiError(500, "Internal Server Error"));
+  }
+};
+
+export const logout = async (req, res) => {
+  try {
+    // console.log("hello");
+    await StudentModel.findByIdAndUpdate(
+      req.user._id,
+      { $unset: { refreshToken: 1 } },
+      { new: true }
+    );
+
+    const options ={
+      httpOnly:true,
+    }
+
+    res.status(200).clearCookie('accessToken',options).clearCookie('refreshToken',options).json(new ApiResponse(200, "Logged out successfully!"));
+
+  } catch(error) {
+    res.status(500).json(new ApiError(500, "Error while logging out!"));
   }
 };

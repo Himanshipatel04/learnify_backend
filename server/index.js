@@ -30,8 +30,6 @@ app.use("/api/ideas",ideaRoutes)
 app.use("/api/student",studentRoutes)
 
 
-
-
 //server
 app.listen(`${process.env.PORT}`,()=>{
     console.log(`App is running at ${process.env.PORT}`);
