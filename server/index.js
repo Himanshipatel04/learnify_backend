@@ -27,10 +27,11 @@ app.use(cors({
 import ideaRoutes from './routes/idea.routes'
 import studentRoutes from './routes/student.routes'
 import mentorRoutes from './routes/mentor.routes'
+import projectRoutes from  './routes/project.routes'
 app.use("/api/ideas",ideaRoutes)
 app.use("/api/student",studentRoutes)
 app.use("/api/mentor",mentorRoutes)
-
+app.use("/api/project",projectRoutes)
 
 //server
 app.listen(`${process.env.PORT}`,()=>{

@@ -2,15 +2,14 @@ import mongoose from "mongoose";
 
 const ProjectSchema = mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "UserModel",
-      required: true,
+    email:{
+      type: String,
+      required:true,
     },
     title: {
       type: String,
       required: true,
-    },
+    }, 
     domain: {
       type: String,
       required: true,
@@ -18,7 +17,7 @@ const ProjectSchema = mongoose.Schema(
     abstract: {
       type: String,
       required: true,
-    },
+    }, 
     description: {
       type: String,
       required: true,
@@ -33,7 +32,7 @@ const ProjectSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    photofield: {
+    image: {
       type: String, 
     },
   },
