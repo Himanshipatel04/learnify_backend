@@ -2,6 +2,7 @@ import { MentorModel } from "../models/MentorModel";
 import ApiError from "../utils/ApiError";
 import ApiResponse from "../utils/ApiResponse";
 import bcrypt from "bcrypt"
+import cloudinary from "../config/cloudinary.config";
 
 const generateAccessAndRefreshToken = async (uid) => {
   try {
@@ -24,6 +25,7 @@ const generateAccessAndRefreshToken = async (uid) => {
 export const registerMentor = async (req, res) => {
   try {
     const { name, email, designation, company, linked, password } = req.body;
+    const image = req.file;
 
     const mentorExists = await MentorModel.findOne({ email });
 
@@ -33,13 +35,37 @@ export const registerMentor = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    let imageUrl = null;
+    if (image) {
+      try {
+        const result = await new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { resource_type: 'auto' },
+            (error, result) => {
+              if (error) {
+                reject(error);
+              } else {
+                resolve(result);
+              }
+            }
+          );
+          stream.end(image.buffer);
+        });
+        imageUrl = result.secure_url;
+      } catch (error) {
+        console.error("Error uploading image to Cloudinary:", error);
+        return res.status(500).json(new ApiError(500, "Error uploading image", error));
+      }
+    }
+
     const newMentor = await MentorModel.create({
       name,
       email,
       designation,
       company,
       linked,
-      password:hashedPassword,
+      password:hashedPassword, 
+      image:imageUrl
     });
 
     newMentor.save();

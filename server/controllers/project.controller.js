@@ -17,7 +17,7 @@ const createProject = async (req, res) => {
   } = req.body;
 
   const user = await StudentModel.findOne({email})
-  console.log(user.email);
+  // console.log(user.email);
 
   if (!user){
     return res.status(404).json(new ApiError(404,"User doesn't exist!"))
@@ -78,10 +78,31 @@ export const fetchProject = async(req,res) => {
     try {
       const projects = await ProjectModel.find()
 
-      res.status(200).json(new ApiResponse(200,"Projects fetched successfully!"))
+      res.status(200).json(new ApiResponse(200,"Projects fetched successfully!",projects))
     } catch (error) {
       res.status(500).json(new ApiError(500,"Internal server error!"))
     }
+}
+
+export const fetchProjectById = async(req,res) => {
+   const projectID = req.params.id
+   try {
+    const project = await ProjectModel.findById(projectID);
+    
+    if (!project) {
+      return res.status(404).send("Project not found");
+    }
+
+    const name = await StudentModel.findOne({email:project.email})
+
+    if(!name){
+      return res.status(400).json(new ApiError(400,"Something went wrong!"))
+    }
+
+    return res.status(200).json(new ApiResponse(200,"Fetched successfully!",[project,name]))
+   } catch (error) {
+    
+   }
 }
 
 export default createProject;

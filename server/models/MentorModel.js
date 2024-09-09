@@ -34,6 +34,7 @@ const MentorSchema = new mongoose.Schema({
   refreshTokenExpiry: {
     type: String,
   },
+  image:{type:String},
 });
 
 // Method to check if the entered password matches the stored password
