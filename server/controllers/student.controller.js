@@ -1,3 +1,4 @@
+import { IdeaModel } from "../models/IdeaModel";
 import { StudentModel } from "../models/StudentModel";
 import ApiError from "../utils/ApiError";
 import ApiResponse from "../utils/ApiResponse";
@@ -126,3 +127,15 @@ export const logout = async (req, res) => {
     res.status(500).json(new ApiError(500, "Error while logging out!"));
   }
 };
+
+export const studentIdeas = async(req,res) => {
+  try{ 
+    //  console.log("hello");
+       const {email} = req.params.email
+       const ideas = await IdeaModel.find({email})
+       return res.status(200).json(new ApiResponse(200,"Fetched",ideas))
+  }
+  catch(error){
+          console.log("Error while fetching ideas for users!",error);
+  }
+}
