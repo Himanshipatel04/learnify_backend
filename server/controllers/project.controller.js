@@ -105,4 +105,21 @@ export const fetchProjectById = async(req,res) => {
    }
 }
 
+export const groupProject = async(req,res) => {
+  try {
+    const groupedProjects = await ProjectModel.aggregate([
+      {
+        $group: {
+          _id: '$collegename', // Group by collegeName
+          projects: { $push: '$$ROOT' }, // Push all project data
+          totalProjects: { $sum: 1 } // Count total projects per college
+        }
+      }
+    ]);
+    res.status(200).json(new ApiResponse(200,"Projects fetched!",groupedProjects))
+  } catch (error) {
+    console.log("Error grouping Projects",error);
+  }
+}
+
 export default createProject;
