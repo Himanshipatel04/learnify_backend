@@ -39,3 +39,4 @@ app.use("/api/admin",adminRoutes)
 app.listen(`${process.env.PORT}`,()=>{
     console.log(`App is running at ${process.env.PORT}`);
 })
+
