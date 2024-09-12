@@ -1,9 +1,13 @@
 import { IdeaModel } from "../models/IdeaModel";
 import { MentorModel } from "../models/MentorModel";
+import { MentorProjects } from "../models/MentorProjectModel";
 import { ProjectModel } from "../models/ProjectModel";
 import { StudentModel } from "../models/StudentModel";
 import ApiError from "../utils/ApiError";
 import ApiResponse from "../utils/ApiResponse";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt"
+import { password } from "bun";
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -14,7 +18,6 @@ export const getAllUsers = async (req, res) => {
     console.log("Error while fetching students for admin!", error);
   }
 };
-
 
 export const deleteUsers = async(req,res) => {
   try {
@@ -87,3 +90,47 @@ export const findValues = async(req,res) => {
     console.log("Error while fetching values!",error);
   }
 }
+
+export const deleteProjectMentor = async(req,res) => {
+  try {
+    const {id} = req.params
+    const project = await MentorProjects.findById(id)
+    if (!project){
+      return res.status(404).json(new ApiError(404,"Project not found!"))
+    }
+    await MentorProjects.findByIdAndDelete(id)
+    return res.status(200).json(new ApiResponse(200,"Deleted successfully!"))
+    
+  } catch (error) {
+    console.log("Error while deleting project of mentor!",error);
+  }
+}
+
+const adminCredentials = {
+    email: "himanshi@gmail.com",
+    password: bcrypt.hashSync("654321", 10)
+   
+};
+
+export const adminLogin = (req, res) => {
+  const { email, password } = req.body;
+
+
+  if (email === adminCredentials.email) {
+      
+      const isPasswordValid = bcrypt.compareSync(password, adminCredentials.password);
+
+      if (isPasswordValid) {
+          const token = jwt.sign({ email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+          res.cookie('token', token, {
+                httpOnly: true,   
+                maxAge: 3600000     
+            });
+          return res.status(200).json({ token, message: "Admin login successful!" });
+      }
+
+      return res.status(401).json({ message: "Invalid email or password" });
+  }
+
+  return res.status(401).json({ message: "Invalid email or password" });
+};

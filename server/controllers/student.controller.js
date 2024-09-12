@@ -90,7 +90,7 @@ export const loginUser = async (req, res) => {
     res.status(500).json(new ApiError(500, "Internal Server Error"));
   }
 };
-
+ 
 export const getStudentUser = async (req, res) => {
   try {
     const user = req.user;
