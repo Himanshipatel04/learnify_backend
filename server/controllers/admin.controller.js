@@ -7,7 +7,6 @@ import ApiError from "../utils/ApiError";
 import ApiResponse from "../utils/ApiResponse";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt"
-import { password } from "bun";
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -88,7 +87,7 @@ export const findValues = async(req,res) => {
     return res.status(200).json(new ApiResponse(200,"Fetched numbers!",{users,projects,ideas,mentors}))
   } catch (error) {
     console.log("Error while fetching values!",error);
-  }
+  } 
 }
 
 export const deleteProjectMentor = async(req,res) => {
