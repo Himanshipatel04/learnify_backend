@@ -2,7 +2,7 @@ import express, { urlencoded } from "express";
 import cookieParser from "cookie-parser";
 require('dotenv').config();
 import cors from "cors"
-import dbConnection from './db/dbConnection'
+import dbConnection from './db/dbConnection.js'
 
 //App and database connection
 dbConnection();
@@ -14,7 +14,7 @@ app.get('/',(req,res)=>{
 
 //Middlewares
 app.use(cors({
-    origin: 'http://localhost:5173', 
+    origin: 'https://learnifyprojectapp.netlify.app', 
     credentials: true 
   }));
   app.use(cookieParser());
@@ -24,11 +24,11 @@ app.use(cors({
 
 
 //Routes
-import ideaRoutes from './routes/idea.routes'
-import studentRoutes from './routes/student.routes'
-import mentorRoutes from './routes/mentor.routes'
-import projectRoutes from  './routes/project.routes'
-import adminRoutes from  './routes/admin.routes'
+import ideaRoutes from './routes/idea.routes.js'
+import studentRoutes from './routes/student.routes.js'
+import mentorRoutes from './routes/mentor.routes.js'
+import projectRoutes from  './routes/project.routes.js'
+import adminRoutes from  './routes/admin.routes.js'
 app.use("/api/ideas",ideaRoutes)
 app.use("/api/student",studentRoutes)
 app.use("/api/mentor",mentorRoutes)
