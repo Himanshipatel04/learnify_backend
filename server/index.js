@@ -1,6 +1,7 @@
 import express, { urlencoded } from "express";
 import cookieParser from "cookie-parser";
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 import cors from "cors"
 import dbConnection from './db/dbConnection.js'
 
