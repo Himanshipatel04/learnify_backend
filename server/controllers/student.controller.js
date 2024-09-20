@@ -1,7 +1,7 @@
-import { IdeaModel } from "../models/IdeaModel";
-import { StudentModel } from "../models/StudentModel";
-import ApiError from "../utils/ApiError";
-import ApiResponse from "../utils/ApiResponse";
+import { IdeaModel } from "../models/IdeaModel.js";
+import { StudentModel } from "../models/StudentModel.js";
+import ApiError from "../utils/ApiError.js";
+import ApiResponse from "../utils/ApiResponse.js";
 import bcrypt from "bcrypt";
 
 const generateAccessAndRefreshToken = async (uid) => {

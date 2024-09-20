@@ -1,5 +1,5 @@
-import { MentorModel } from "../models/MentorModel";
-import ApiError from "../utils/ApiError";
+import { MentorModel } from "../models/MentorModel.js";
+import ApiError from "../utils/ApiError.js";
 import jwt from "jsonwebtoken";
 
 export const verifyJWTM = async (req, res, next) => {

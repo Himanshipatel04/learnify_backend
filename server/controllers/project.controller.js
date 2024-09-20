@@ -1,8 +1,8 @@
-import cloudinary from "../config/cloudinary.config";
-import ApiError from "../utils/ApiError";
-import ApiResponse from "../utils/ApiResponse";
-import { ProjectModel } from "../models/ProjectModel";
-import { StudentModel } from "../models/StudentModel";
+import cloudinary from "../config/cloudinary.config.js";
+import ApiError from "../utils/ApiError.js";
+import ApiResponse from "../utils/ApiResponse.js";
+import { ProjectModel } from "../models/ProjectModel.js";
+import { StudentModel } from "../models/StudentModel.js";
 
 const createProject = async (req, res) => {
   const {

@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { createMentorProject, getMentors, getMentorUser, getProjectById, getProjects, loginMentor, logout, registerMentor } from "../controllers/mentor.controller";
-import { verifyJWTM } from "../middlewares/authm.middleware";
-import { upload } from '../config/multer.config'; 
+import { createMentorProject, getMentors, getMentorUser, getProjectById, getProjects, loginMentor, logout, registerMentor } from "../controllers/mentor.controller.js";
+import { verifyJWTM } from "../middlewares/authm.middleware.js";
+import { upload } from '../config/multer.config.js'; 
 
 const router = Router()
 

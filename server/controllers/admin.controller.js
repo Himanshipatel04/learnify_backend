@@ -1,10 +1,10 @@
-import { IdeaModel } from "../models/IdeaModel";
-import { MentorModel } from "../models/MentorModel";
-import { MentorProjects } from "../models/MentorProjectModel";
-import { ProjectModel } from "../models/ProjectModel";
-import { StudentModel } from "../models/StudentModel";
-import ApiError from "../utils/ApiError";
-import ApiResponse from "../utils/ApiResponse";
+import { IdeaModel } from "../models/IdeaModel.js";
+import { MentorModel } from "../models/MentorModel.js";
+import { MentorProjects } from "../models/MentorProjectModel.js";
+import { ProjectModel } from "../models/ProjectModel.js";
+import { StudentModel } from "../models/StudentModel.js";
+import ApiError from "../utils/ApiError.js";
+import ApiResponse from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt"
 

@@ -1,8 +1,8 @@
 import {Router} from 'express'
-import { getStudentUser, loginUser, logout, registerUser, studentIdeas } from '../controllers/student.controller'
-import { verifyJWT } from '../middlewares/auth.middleware'
-import createProject from '../controllers/project.controller'
-import { upload } from '../config/multer.config';
+import { getStudentUser, loginUser, logout, registerUser, studentIdeas } from '../controllers/student.controller.js'
+import { verifyJWT } from '../middlewares/auth.middleware.js'
+import createProject from '../controllers/project.controller.js'
+import { upload } from '../config/multer.config.js';
 
 const router = Router()
 

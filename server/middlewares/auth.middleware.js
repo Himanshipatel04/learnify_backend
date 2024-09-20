@@ -1,5 +1,5 @@
 import { StudentModel } from "../models/StudentModel.js";
-import ApiError from "../utils/ApiError";
+import ApiError from "../utils/ApiError.js";
 import jwt from "jsonwebtoken";
 
 export const verifyJWT = async (req, res, next) => {

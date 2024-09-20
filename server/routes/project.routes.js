@@ -1,7 +1,6 @@
 import { Router } from "express";
 const router = Router();
-import createProject, { fetchProject, fetchProjectById, groupDomain, groupProject }  from "../controllers/project.controller";
-
+import createProject, { fetchProject, fetchProjectById, groupDomain, groupProject }  from "../controllers/project.controller.js";
 
 router.route('/getAllProjects').get(fetchProject);
 router.route('/groupProjects').get(groupProject);

@@ -1,6 +1,6 @@
 import {Router} from 'express'
-import {createIdea, fetchIdea} from '../controllers/idea.controller'
-import { verifyJWT } from '../middlewares/auth.middleware'
+import {createIdea, fetchIdea} from '../controllers/idea.controller.js'
+import { verifyJWT } from '../middlewares/auth.middleware.js'
 
 const router = Router()
 

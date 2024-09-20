@@ -1,6 +1,6 @@
-import { IdeaModel } from "../models/IdeaModel";
-import ApiResponse from "../utils/ApiResponse";
-import ApiError from "../utils/ApiError";
+import { IdeaModel } from "../models/IdeaModel.js";
+import ApiResponse from "../utils/ApiResponse.js";
+import ApiError from "../utils/ApiError.js";
 
 export const createIdea = async (req, res) => {
   try {

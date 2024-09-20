@@ -1,9 +1,9 @@
-import { MentorModel } from "../models/MentorModel";
-import ApiError from "../utils/ApiError";
-import ApiResponse from "../utils/ApiResponse";
+import { MentorModel } from "../models/MentorModel.js";
+import ApiError from "../utils/ApiError.js";
+import ApiResponse from "../utils/ApiResponse.js";
 import bcrypt from "bcrypt"
-import cloudinary from "../config/cloudinary.config";
-import { MentorProjects } from "../models/MentorProjectModel";
+import cloudinary from "../config/cloudinary.config.js";
+import { MentorProjects } from "../models/MentorProjectModel.js";
 
 
 const generateAccessAndRefreshToken = async (uid) => {

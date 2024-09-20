@@ -1,6 +1,6 @@
 import {Router} from 'express';
-import { adminLogin, deleteIdea, deleteMentor, deleteProject, deleteProjectMentor, deleteUsers, findValues, getAllUsers } from '../controllers/admin.controller';
-import { verifyAdmin } from '../middlewares/autha.middleware';
+import { adminLogin, deleteIdea, deleteMentor, deleteProject, deleteProjectMentor, deleteUsers, findValues, getAllUsers } from '../controllers/admin.controller.js';
+import { verifyAdmin } from '../middlewares/autha.middleware.js';
 
 const router = Router()
 
