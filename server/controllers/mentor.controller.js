@@ -1,10 +1,9 @@
 import { MentorModel } from "../models/MentorModel.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 import cloudinary from "../config/cloudinary.config.js";
 import { MentorProjects } from "../models/MentorProjectModel.js";
-
 
 const generateAccessAndRefreshToken = async (uid) => {
   try {
@@ -23,7 +22,7 @@ const generateAccessAndRefreshToken = async (uid) => {
     console.log("Error in generateAccessAndRefreshToken for mentor", error);
   }
 };
- 
+
 export const registerMentor = async (req, res) => {
   try {
     const { name, email, designation, company, linked, password } = req.body;
@@ -42,7 +41,7 @@ export const registerMentor = async (req, res) => {
       try {
         const result = await new Promise((resolve, reject) => {
           const stream = cloudinary.uploader.upload_stream(
-            { resource_type: 'auto' },
+            { resource_type: "auto" },
             (error, result) => {
               if (error) {
                 reject(error);
@@ -56,7 +55,9 @@ export const registerMentor = async (req, res) => {
         imageUrl = result.secure_url;
       } catch (error) {
         console.error("Error uploading image to Cloudinary:", error);
-        return res.status(500).json(new ApiError(500, "Error uploading image", error));
+        return res
+          .status(500)
+          .json(new ApiError(500, "Error uploading image", error));
       }
     }
 
@@ -66,8 +67,8 @@ export const registerMentor = async (req, res) => {
       designation,
       company,
       linked,
-      password:hashedPassword, 
-      image:imageUrl
+      password: hashedPassword,
+      image: imageUrl,
     });
 
     newMentor.save();
@@ -101,7 +102,7 @@ export const loginMentor = async (req, res) => {
       mentor._id
     );
 
-    const options = { httpOnly: true ,sameSite: 'None',};
+    const options = { httpOnly: true, sameSite: "None", secure: true };
 
     const mentorIn = await MentorModel.findById(mentor._id).select(
       "-refreshToken -password"
@@ -150,30 +151,29 @@ export const logout = async (req, res) => {
       { new: true }
     );
 
-    const options = {httpOnly:true}
+    const options = { httpOnly: true };
 
-    return res.status(200).clearCookie('accessToken',options).clearCookie('refreshToken',options).json(new ApiResponse(200,"Logged out successfully!"))
+    return res
+      .status(200)
+      .clearCookie("accessToken", options)
+      .clearCookie("refreshToken", options)
+      .json(new ApiResponse(200, "Logged out successfully!"));
   } catch (error) {
-    res.status(500).json(new ApiError(500, "Error while logging out in mentor!"));
-    console.log("Error while logging out for mentor",error);
+    res
+      .status(500)
+      .json(new ApiError(500, "Error while logging out in mentor!"));
+    console.log("Error while logging out for mentor", error);
   }
 };
 
-export const getMentors = async(req,res) => {
-     const mentors = await MentorModel.find()
-     res.status(200).json(new ApiResponse(200,"Mentors fetched!",mentors))
-}
+export const getMentors = async (req, res) => {
+  const mentors = await MentorModel.find();
+  res.status(200).json(new ApiResponse(200, "Mentors fetched!", mentors));
+};
 
-export const createMentorProject = async(req,res) => {
-  const {
-    email,
-    title,
-    domain,
-    abstract,
-    description,
-    videolink,
-    githublink,
-  } = req.body;
+export const createMentorProject = async (req, res) => {
+  const { email, title, domain, abstract, description, videolink, githublink } =
+    req.body;
 
   const user = await MentorModel.findOne({ email });
   // console.log(user.email);
@@ -235,30 +235,34 @@ export const createMentorProject = async(req,res) => {
     console.error("Error uploading project:", error);
     res.status(500).json(new ApiError(500, "Error uploading project", error));
   }
-}
+};
 
-export const getProjects = async(req,res) => {
+export const getProjects = async (req, res) => {
   try {
     const projects = await MentorProjects.find();
-    return res.status(200).json(new ApiResponse(200,"Projects fetched!",projects))
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "Projects fetched!", projects));
   } catch (error) {
-    console.log("Error in getProjects",error);
+    console.log("Error in getProjects", error);
   }
-}
+};
 
-export const getProjectById = async(req,res) => {
+export const getProjectById = async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const project = await MentorProjects.findById(id);
     if (!project) {
-      return res.status(404).json(new ApiError(404,"Project not found!"))
+      return res.status(404).json(new ApiError(404, "Project not found!"));
     }
-    const mentor = await MentorModel.findOne({email:project.email});
+    const mentor = await MentorModel.findOne({ email: project.email });
     if (!mentor) {
-      return res.status(404).json(new ApiError(404,"Mentor not found!"))
+      return res.status(404).json(new ApiError(404, "Mentor not found!"));
     }
-    return res.status(200).json(new ApiResponse(200,"Project fetched!",[project,mentor]))
+    return res
+      .status(200)
+      .json(new ApiResponse(200, "Project fetched!", [project, mentor]));
   } catch (error) {
-    console.log("Error in getProjectById",error);
+    console.log("Error in getProjectById", error);
   }
-}
+};
