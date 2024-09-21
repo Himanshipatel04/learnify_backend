@@ -101,7 +101,7 @@ export const loginMentor = async (req, res) => {
       mentor._id
     );
 
-    const options = { httpOnly: true };
+    const options = { httpOnly: true ,sameSite: 'None',};
 
     const mentorIn = await MentorModel.findById(mentor._id).select(
       "-refreshToken -password"

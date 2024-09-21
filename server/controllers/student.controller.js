@@ -71,6 +71,7 @@ export const loginUser = async (req, res) => {
 
     const options = {
       httpOnly: true,
+      sameSite: 'None',
     };
 
     // console.log(accessToken);
@@ -119,6 +120,7 @@ export const logout = async (req, res) => {
 
     const options ={
       httpOnly:true,
+      sameSite: 'None',
     }
 
     res.status(200).clearCookie('accessToken',options).clearCookie('refreshToken',options).json(new ApiResponse(200, "Logged out successfully!"));

@@ -122,7 +122,8 @@ export const adminLogin = (req, res) => {
       if (isPasswordValid) {
           const token = jwt.sign({ email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
           res.cookie('token', token, {
-                httpOnly: true,   
+                httpOnly: true, 
+                sameSite: 'None',  
                 maxAge: 3600000     
             });
           return res.status(200).json({ token, message: "Admin login successful!" });
