@@ -266,3 +266,16 @@ export const getProjectById = async (req, res) => {
     console.log("Error in getProjectById", error);
   }
 };
+
+export const getMentorProject = async (req, res) => {
+  try {
+    console.log("here");
+    const { mentorEmail } = req.params;
+    console.log(mentorEmail);
+    const projects = await MentorProjects.find({ email: mentorEmail });
+    console.log(projects);
+    return res.status(200).json(new ApiResponse(200, "Fetched", projects));
+  } catch {
+    console.log("Error while fetching projects for mentors!", error);
+  }
+};

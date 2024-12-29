@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 //Middlewares
 app.use(
   cors({
-    origin: "https://learnifyprojectapp.netlify.app",
+    origin: ["https://learnifyprojectapp.netlify.app","http://localhost:5173"],
     credentials: true,
   })
 );

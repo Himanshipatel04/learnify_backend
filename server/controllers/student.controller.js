@@ -30,7 +30,7 @@ export const registerUser = async (req, res) => {
 
   if (userExists) {
     throw new ApiError(409, "User already exits!");
-  } 
+  }
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -71,8 +71,8 @@ export const loginUser = async (req, res) => {
 
     const options = {
       httpOnly: true,
-      secure: true, 
-      sameSite: 'None',
+      secure: true,
+      sameSite: "None",
     };
 
     // console.log(accessToken);
@@ -119,27 +119,39 @@ export const logout = async (req, res) => {
       { new: true }
     );
 
-    const options ={
-      httpOnly:true,
-      secure: true, 
-      sameSite: 'None',
-    }
+    const options = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    };
 
-    res.status(200).clearCookie('accessToken',options).clearCookie('refreshToken',options).json(new ApiResponse(200, "Logged out successfully!"));
-
-  } catch(error) {
+    res
+      .status(200)
+      .clearCookie("accessToken", options)
+      .clearCookie("refreshToken", options)
+      .json(new ApiResponse(200, "Logged out successfully!"));
+  } catch (error) {
     res.status(500).json(new ApiError(500, "Error while logging out!"));
   }
 };
 
-export const studentIdeas = async(req,res) => {
-  try{ 
+export const studentIdeas = async (req, res) => {
+  try {
     //  console.log("hello");
-       const {email} = req.params.email
-       const ideas = await IdeaModel.find({email})
-       return res.status(200).json(new ApiResponse(200,"Fetched",ideas))
+    const { email } = req.params.email;
+    const ideas = await IdeaModel.find({ email });
+    return res.status(200).json(new ApiResponse(200, "Fetched", ideas));
+  } catch (error) {
+    console.log("Error while fetching ideas for users!", error);
   }
-  catch(error){
-          console.log("Error while fetching ideas for users!",error);
+};
+
+export const getStudentProject = async (req, res) => {
+  try {
+    const { studentEmail } = req.params.student - email;
+    const projects = await ProjectModel.find({ studentEmail });
+    return res.status(200).json(new ApiResponse(200, "Fetched", projects));
+  } catch {
+    console.log("Error while fetching projects for users!", error);
   }
-}
+};

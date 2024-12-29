@@ -18,4 +18,6 @@ router.route("/getUserIdea/:email").get(verifyJWT,studentIdeas)
 
 router.post('/create-project',upload.single('image'), createProject);
 
+// router.get('/getStudentProject/:student-email',getStudentProject)
+
 export default router
