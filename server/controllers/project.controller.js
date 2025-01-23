@@ -82,7 +82,7 @@ const createProject = async (req, res) => {
 export const fetchProject = async (req, res) => {
   try {
     const projects = await ProjectModel.find();
-
+    // console.log("hello")
     res
       .status(200)
       .json(new ApiResponse(200, "Projects fetched successfully!", projects));
